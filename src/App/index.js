@@ -3,24 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 import uuid from 'uuid/v4';
 
+const getWishlist = () => { 
+  const raw = window.localStorage.getItem("wishlist");
+  return raw ? JSON.parse(raw) : [];
+}
+
 class App extends Component {
-  state = {
-    wishlist: [
-      {
-        id: uuid(),
-        name: "madewell sweater",
-        link: "optional",
-        size: "small",
-        notes: "please!",
-      },
-    ]
-  }
 
   addItem = (event) => {
     event.preventDefault();
     const { name, link, size, notes } = this._form.elements;
-    this.setState({wishlist: [
-      ...this.state.wishlist,
+    window.localStorage.setItem("wishlist", JSON.stringify([
+      ...getWishlist(),
       {
         id: uuid(),
         name: name.value,
@@ -28,9 +22,10 @@ class App extends Component {
         size: size.value,
         notes: notes.value,
       }
-    ]});
+    ]));
     this._form.reset();
     name.focus();
+    this.forceUpdate();
   }
 
   render() {
@@ -52,7 +47,7 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.wishlist.map(item => (
+            {getWishlist().map(item => (
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.size}</td>
