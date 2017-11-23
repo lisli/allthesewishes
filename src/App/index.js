@@ -29,6 +29,8 @@ class App extends Component {
         notes: notes.value,
       }
     ]});
+    this._form.reset();
+    name.focus();
   }
 
   render() {
