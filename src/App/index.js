@@ -14,6 +14,22 @@ class App extends Component {
       },
     ]
   }
+
+  addItem = (event) => {
+    event.preventDefault();
+    const { name, link, size, notes } = this._form.elements;
+    this.setState({wishlist: [
+      ...this.state.wishlist,
+      {
+        id: "1",
+        name: name.value,
+        link: link.value,
+        size: size.value,
+        notes: notes.value,
+      }
+    ]});
+  }
+
   render() {
     return (
       <div className="App">
@@ -42,6 +58,13 @@ class App extends Component {
             ))}
           </tbody>
         </table>
+        <form ref={form => this._form = form} onSubmit={this.addItem}>
+          <label>What do you want?<input name="name"/></label>
+          <label>Does it have a link?<input name="link"/></label>
+          <label>What size?<input name="size"/></label>
+          <label>Any notes?<textarea name="notes"/></label>
+          <button>Add me!</button>
+        </form>
       </div>
     );
   }
