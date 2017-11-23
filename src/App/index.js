@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import uuid from 'uuid/v4';
 
 class App extends Component {
   state = {
     wishlist: [
       {
-        id: "0",
+        id: uuid(),
         name: "madewell sweater",
         link: "optional",
         size: "small",
@@ -21,7 +22,7 @@ class App extends Component {
     this.setState({wishlist: [
       ...this.state.wishlist,
       {
-        id: "1",
+        id: uuid(),
         name: name.value,
         link: link.value,
         size: size.value,
