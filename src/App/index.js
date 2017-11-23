@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const data = [
-  {
-    id: "0",
-    name: "madewell sweater",
-    link: "optional",
-    size: "small",
-    notes: "please!",
-  },
-]
-
-
 class App extends Component {
+  state = {
+    wishlist: [
+      {
+        id: "0",
+        name: "madewell sweater",
+        link: "optional",
+        size: "small",
+        notes: "please!",
+      },
+    ]
+  }
   render() {
     return (
       <div className="App">
@@ -33,7 +33,7 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {data.map(item => (
+            {this.state.wishlist.map(item => (
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.size}</td>
