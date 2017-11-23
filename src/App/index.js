@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const data = [
+  {
+    id: "0",
+    name: "madewell sweater",
+    link: "optional",
+    size: "small",
+    notes: "please!",
+  },
+]
+
+
 class App extends Component {
   render() {
     return (
@@ -13,6 +24,24 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Thing</th>
+              <th>Size</th>
+              <th>Notes:</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(item => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.size}</td>
+                <td>{item.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
