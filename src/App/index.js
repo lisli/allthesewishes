@@ -11,6 +11,12 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchData();
+    this._dbChangeEmitter = db.changes({since: 'now', live: true})
+      .on('change', this.fetchData);
+  }
+
+  componentWillUnmount() {
+    this._dbChangeEmitter.cancel()
   }
 
   fetchData = () => {
@@ -29,11 +35,7 @@ class App extends Component {
       link: link.value,
       size: size.value,
       notes: notes.value,
-    }, (err, result) => {
-      if (err) return console.error(err);
-
-      this.fetchData();
-    })
+    });
     this._form.reset();
     name.focus();
   }
