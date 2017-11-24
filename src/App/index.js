@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import uuid from 'uuid/v4';
 import PouchDB from 'pouchdb';
 
 const db = new PouchDB('wishlist');
