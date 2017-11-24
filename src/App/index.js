@@ -2,30 +2,41 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import uuid from 'uuid/v4';
+import PouchDB from 'pouchdb';
 
-const getWishlist = () => { 
-  const raw = window.localStorage.getItem("wishlist");
-  return raw ? JSON.parse(raw) : [];
-}
+const db = new PouchDB('wishlist');
 
 class App extends Component {
+
+  state = { wishlist: [] }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    db.allDocs({include_docs: true, descending: true}, (err, doc) => {
+      if (err) return console.error(err);
+
+      this.setState({wishlist: doc.rows.map(row => row.doc)});
+    });
+  }
 
   addItem = (event) => {
     event.preventDefault();
     const { name, link, size, notes } = this._form.elements;
-    window.localStorage.setItem("wishlist", JSON.stringify([
-      ...getWishlist(),
-      {
-        id: uuid(),
-        name: name.value,
-        link: link.value,
-        size: size.value,
-        notes: notes.value,
-      }
-    ]));
+    db.post({
+      name: name.value,
+      link: link.value,
+      size: size.value,
+      notes: notes.value,
+    }, (err, result) => {
+      if (err) return console.error(err);
+
+      this.fetchData();
+    })
     this._form.reset();
     name.focus();
-    this.forceUpdate();
   }
 
   render() {
@@ -47,8 +58,8 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {getWishlist().map(item => (
-              <tr key={item.id}>
+            {this.state.wishlist.map(item => (
+              <tr key={item._id}>
                 <td>{item.name}</td>
                 <td>{item.size}</td>
                 <td>{item.notes}</td>
