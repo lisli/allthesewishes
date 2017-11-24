@@ -6,6 +6,7 @@
     "react-scripts": "1.0.17"
   },
   "dependencies": {
+    "pouchdb": "^6.3.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "uuid": "^3.1.0"
